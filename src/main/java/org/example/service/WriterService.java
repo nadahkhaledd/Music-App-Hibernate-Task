@@ -4,7 +4,6 @@ import org.example.model.Song;
 import org.example.model.Writer;
 import org.example.repository.WriterRepo;
 
-import java.awt.*;
 import java.util.List;
 
 public class WriterService {
@@ -23,18 +22,18 @@ public class WriterService {
         repo.saveWriter(writer);
     }
 
-    public void delete(int id){
-        int result = repo.deleteWriter(id);
+    public void delete(String name){
+        int result = repo.deleteWriter(name);
         if(result == 1)
             System.out.println("Writer deleted.");
     }
 
-    public Writer get(int id){
-        return repo.getWriter(id);
+    public Writer get(String name){
+        return repo.getWriter(name);
     }
 
-    public List<Song> getSongs(int id){
-        return repo.getWriterSongs(id);
+    public List<Song> getSongs(String name){
+        return repo.getWriterSongs(name);
     }
 
 

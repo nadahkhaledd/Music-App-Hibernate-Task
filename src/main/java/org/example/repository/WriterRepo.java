@@ -23,11 +23,11 @@ public class WriterRepo {
         return writers;
     }
 
-    public Writer getWriter(int id){
+    public Writer getWriter(String name){
         Writer writer;
         try (Session session = factory.openSession()) {
-            writer  = session.createQuery("from Writer w where w.id=:id ", Writer.class)
-                    .setParameter("id", id)
+            writer  = session.createQuery("from Writer w where w.name=:name ", Writer.class)
+                    .setParameter("name", name)
                     .getSingleResult();
         }
         return writer;
@@ -61,26 +61,26 @@ public class WriterRepo {
         return results;
     }
 
-    public int deleteWriter(int id){
+    public int deleteWriter(String name){
         int results;
         try (Session session = factory.openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
-                    "delete from Writer w where w.id=:id",
+                    "delete from Writer w where w.name=:name",
                     Writer.class
             );
-            query.setParameter("id", id);
+            query.setParameter("name", name);
             results = query.executeUpdate();
             tx.commit();
         }
         return results;
     }
 
-    public List<Song> getWriterSongs(int id){
+    public List<Song> getWriterSongs(String name){
         List<Song> songs;
         try (Session session = factory.openSession()) {
-            songs  = session.createQuery("from Song s where s.writer.id=:id ", Song.class)
-                    .setParameter("id", id)
+            songs  = session.createQuery("from Song s where s.writer.name=:name ", Song.class)
+                    .setParameter("name", name)
                     .list();
         }
         return songs;
