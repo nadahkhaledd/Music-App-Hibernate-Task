@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-import static org.example.repository.config.factory;
+import static org.example.repository.Config.factory;
 
 public class WriterRepo {
 

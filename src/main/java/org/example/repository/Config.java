@@ -5,7 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class config {
+public class Config {
 
     static StandardServiceRegistry registry =
             new StandardServiceRegistryBuilder()
