@@ -2,6 +2,7 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,7 @@ public class Writer {
     @Column(nullable = false, length = 50)
     private String nationality;
 
-    @OneToMany(mappedBy = "writer")
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
     private Set<Song> songs;
 
 
@@ -29,6 +30,7 @@ public class Writer {
         this.name = name;
         this.age = age;
         this.nationality = nationality;
+        this.songs = new HashSet<>();
     }
 
     public int getId() {
@@ -61,5 +63,23 @@ public class Writer {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
+
+    @Override
+    public String toString() {
+        return "Writer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", nationality='" + nationality + '\'' +
+                '}';
     }
 }

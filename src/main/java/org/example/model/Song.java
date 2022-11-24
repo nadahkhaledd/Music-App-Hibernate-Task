@@ -19,6 +19,9 @@ public class Song {
     @Column(nullable = false, length = 100)
     private String album;
 
+    @Column(nullable = false, length = 50)
+    private String genre;
+
     @Column(nullable = false, length = 4)
     private String yearRelease;
 
@@ -30,10 +33,12 @@ public class Song {
     public Song() {
     }
 
-    public Song(String title, String artist, String album, String yearRelease, Writer writer) {
+
+    public Song(String title, String artist, String album, String genre, String yearRelease, Writer writer) {
         this.title = title;
         this.artist = artist;
         this.album = album;
+        this.genre = genre;
         this.yearRelease = yearRelease;
         this.writer = writer;
     }
@@ -68,6 +73,14 @@ public class Song {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getArtist() {
