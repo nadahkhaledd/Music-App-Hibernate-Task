@@ -5,16 +5,21 @@ import org.example.model.Writer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.example.repository.Config.factory;
 
+@Repository
 public class SongRepo {
+
+    @Autowired
+    Config config;
 
     public void saveSong(Song song){
 
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             session.persist(song);
             tx.commit();
@@ -24,7 +29,7 @@ public class SongRepo {
     public List<Song> getAllSongs(){
         List<Song> songs;
 
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             songs = session.createQuery("from Song", Song.class)
                     .list();
         }
@@ -34,7 +39,7 @@ public class SongRepo {
 
     public Song getSong(String title) {
         Song song;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             song = session.createQuery("from Song s where s.title=:title ", Song.class)
                     .setParameter("title", title)
                     .getSingleResult();
@@ -45,7 +50,7 @@ public class SongRepo {
     public int updateSong(int id, String title, String artist,
                           String album, String genre, String yearRelease){
         int results;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
                     "update Song s set s.title=:title, s.artist=:artist, s.album=:album," +
@@ -67,7 +72,7 @@ public class SongRepo {
 
     public int deleteSong(String title){
         int results;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
                     "delete from Song s where s.title=:title",
@@ -82,7 +87,7 @@ public class SongRepo {
 
     public Writer getSongWriter(String title){
         Writer writer;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             writer  = session.createQuery("from Song s where s.title=:title ", Song.class)
                     .setParameter("title", title)
                     .getSingleResult().getWriter();

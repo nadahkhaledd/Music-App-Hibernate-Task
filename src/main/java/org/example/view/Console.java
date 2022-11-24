@@ -1,83 +1,173 @@
 package org.example.view;
 
-import org.example.repository.SongRepo;
-import org.example.repository.WriterRepo;
+import org.example.model.Song;
+import org.example.model.Writer;
 import org.example.service.SongService;
 import org.example.service.WriterService;
 import org.example.view.utility.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Component
 public class Console {
 
     private WriterService writerService;
     private SongService songService;
 
-    private Menu menu;
-    private Utils utils;
+    //private Menu menu;
+    private Utils utils = new Utils();
+    static List<String> menuOptions;
 
-    public Console() {
-        writerService = new WriterService(new WriterRepo());
-        songService = new SongService(new SongRepo());
-        menu = new Menu(writerService, songService);
-        utils = new Utils();
+    @Autowired
+    public Console(WriterService writerService, SongService songService) {
+        writerService = writerService;
+        songService = songService;
+        //menu = new Menu(writerService, songService);
+        //utils = new Utils();
     }
 
-     public void start(){
-        while (true){
+    static {
+        menuOptions = new ArrayList<>(Arrays.asList("1. add writer", "2. show all writers", "3. show a writer by name",
+                "4. delete writer", "5. show writer songs", "6. add song", "7. show all songs",
+                "8. show a song by name", "9. delete song", "10. show songwriter",
+                "11. update writer", "12. update song", "13. Exit"));
+    }
+
+    void showMenu() {
+        menuOptions.forEach(System.out::println);
+    }
+
+    public void start() {
+        while (true) {
             System.out.println("Welcome! Choose an option");
-            menu.showMenu();
+            showMenu();
             int option = utils.getIntInput("");
             doOption(option);
         }
-     }
+    }
 
-     private void doOption(int option)
-     {
-         switch (option){
+    public Writer addWriter() {
+        System.out.println("Enter writer data");
+        String name = utils.getStringInput("Enter writer's name");
+        int age = utils.getIntInput("Enter writer's age");
+        String nationality = utils.getStringInput("Enter writer's nationality");
 
-             case 1:
-                 writerService.add(menu.addWriter());
-                 break;
+        return new Writer(name, age, nationality);
+    }
 
-             case 2:
-                 writerService.getAll().forEach(System.out::println);
-                 break;
+    public Song addSong() {
+        System.out.println("Enter song data");
+        String title = utils.getStringInput("Enter title of song");
+        String artist = utils.getStringInput("Enter artist of the song");
+        String album = utils.getStringInput("Enter album name of the song");
+        String genre = utils.getStringInput("Enter song's genre");
+        String year = utils.getStringInput("Enter release year of the song");
 
-             case 3:
-                 menu.showWriter();
-                 break;
 
-             case 4:
-                 menu.deleteWriter();
-                 break;
+        String writerName = utils.getStringInput("Enter writer's name");
+        Writer writer = writerService.get(writerName);
+        while (writer == null) {
+            System.err.println("writer name invalid! try again");
+            writerName = utils.getStringInput("Enter writer's name");
+            writer = writerService.get(writerName);
+        }
+        return new Song(title, artist, album, genre, year, writer);
+    }
 
-             case 5:
-                 menu.showWriterSongs();
-                 break;
+    void showWriter() {
+        String name = utils.getStringInput("Enter writer name");
+        Writer writer = writerService.get(name);
+        if (writer != null)
+            System.out.println(writer);
+        else System.out.println("No writer found with that name!");
+    }
 
-             case 6:
-                 songService.add(menu.addSong());
-                 break;
+    void deleteWriter() {
+        String name = utils.getStringInput("Enter writer name to delete");
+        writerService.delete(name);
+    }
 
-             case 7:
-                 songService.getAll().forEach(System.out::println);
-                 break;
+    void showWriterSongs() {
+        String name = utils.getStringInput("Enter writer name");
+        List<Song> songs = writerService.getSongs(name);
+        if (songs.isEmpty())
+            System.out.println("No songs found for that writer");
+        else
+            songs.forEach(System.out::println);
+    }
 
-             case 8:
-                 menu.showSong();
-                 break;
+    void showSong() {
+        String title = utils.getStringInput("Enter song name");
+        Song song = songService.get(title);
+        if (song != null)
+            System.out.println(song);
+        else System.out.println("No songs found with that title!");
+    }
 
-             case 9:
-                 menu.deleteSong();
-                 break;
+    void deleteSong() {
+        String title = utils.getStringInput("Enter song name to delete");
+        songService.delete(title);
+    }
 
-             case 10:
-                 menu.showSongwriter();
-                 break;
+    void showSongwriter() {
+        String title = utils.getStringInput("Enter song name");
+        System.out.println(songService.getWriter(title));
+    }
 
-             case 13:
-                 System.exit(0);
-                 break;
-             default: break;
-         }
-     }
+    private void doOption(int option) {
+        switch (option) {
+
+            case 1:
+                writerService.add(addWriter());
+                break;
+
+            case 2:
+                writerService.getAll().forEach(System.out::println);
+                break;
+
+            case 3:
+                showWriter();
+                break;
+
+            case 4:
+                deleteWriter();
+                break;
+
+            case 5:
+                showWriterSongs();
+                break;
+
+            case 6:
+                songService.add(addSong());
+                break;
+
+            case 7:
+                songService.getAll().forEach(System.out::println);
+                break;
+
+            case 8:
+                showSong();
+                break;
+
+            case 9:
+                deleteSong();
+                break;
+
+            case 10:
+                showSongwriter();
+                break;
+
+            case 13:
+                System.exit(0);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 }

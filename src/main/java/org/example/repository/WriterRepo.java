@@ -5,17 +5,22 @@ import org.example.model.Writer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.example.repository.Config.factory;
 
+@Repository
 public class WriterRepo {
+
+    @Autowired
+    Config config;
 
     public List<Writer> getAllWriters(){
         List<Writer> writers;
 
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             writers = session.createQuery("from Writer", Writer.class)
                     .list();
         }
@@ -25,7 +30,7 @@ public class WriterRepo {
 
     public Writer getWriter(String name){
         Writer writer;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             writer  = session.createQuery("from Writer w where w.name=:name ", Writer.class)
                     .setParameter("name", name)
                     .getSingleResult();
@@ -35,7 +40,7 @@ public class WriterRepo {
 
     public void saveWriter(Writer writer){
 
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             session.persist(writer);
             tx.commit();
@@ -44,7 +49,7 @@ public class WriterRepo {
 
     public int updateWriter(int id, String name, int age, String nationality){
         int results;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
                     "update Writer w set w.name=:name, w.age=:age, w.nationality=:nationality" +
@@ -63,7 +68,7 @@ public class WriterRepo {
 
     public int deleteWriter(String name){
         int results;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
                     "delete from Writer w where w.name=:name",
@@ -78,7 +83,7 @@ public class WriterRepo {
 
     public List<Song> getWriterSongs(String name){
         List<Song> songs;
-        try (Session session = factory.openSession()) {
+        try (Session session = config.getFactory().openSession()) {
             songs  = session.createQuery("from Song s where s.writer.name=:name ", Song.class)
                     .setParameter("name", name)
                     .list();

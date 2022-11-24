@@ -3,13 +3,17 @@ package org.example.service;
 import org.example.model.Song;
 import org.example.model.Writer;
 import org.example.repository.WriterRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WriterService {
 
     WriterRepo repo;
 
+    @Autowired
     public WriterService(WriterRepo repo) {
         this.repo = repo;
     }

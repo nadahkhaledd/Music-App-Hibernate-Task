@@ -4,15 +4,24 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Config {
 
-    static StandardServiceRegistry registry =
-            new StandardServiceRegistryBuilder()
-                    .configure()
-                    .build();
+     private SessionFactory factory;
 
-    static SessionFactory factory = new MetadataSources(registry)
-            .buildMetadata()
-            .buildSessionFactory();
+     public Config() {
+
+     }
+
+     public SessionFactory getFactory() {
+          return factory;
+     }
+
+     @Autowired
+     public void setFactory(SessionFactory factory) {
+          this.factory = factory;
+     }
 }
