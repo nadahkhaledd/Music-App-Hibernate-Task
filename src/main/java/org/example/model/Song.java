@@ -101,14 +101,11 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", artist='" + artist + '\'' +
-                ", album='" + album + '\'' +
-                ", genre='" + genre + '\'' +
-                ", yearRelease='" + yearRelease + '\'' +
-                ", writer=" + writer +
-                '}';
+        return String.format("\n-------------------------------------------\n" +
+                "Title: %s\t\tArtist: %s\t\tAlbum: %s\n" +
+                "Genre: %s\t\tYear: %s\n" +
+                "Songwriter: %s\n" +
+                "-------------------------------------------",
+                title, artist, album, genre, yearRelease, writer.getName());
     }
 }

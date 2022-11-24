@@ -75,11 +75,9 @@ public class Writer {
 
     @Override
     public String toString() {
-        return "Writer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", nationality='" + nationality + '\'' +
-                '}';
+        return String.format("\n-------------------------------------------\nWriter\n" +
+                        "Name: %s\t\tage: %s\t\tnationality: %s\n" +
+                        "-------------------------------------------",
+                name, age, nationality);
     }
 }

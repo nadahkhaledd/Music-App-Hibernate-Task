@@ -6,12 +6,6 @@ import org.example.repository.SongRepo;
 import org.example.repository.WriterRepo;
 import org.example.service.SongService;
 import org.example.service.WriterService;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
 
@@ -33,9 +27,10 @@ public class App
         songService.add(cardigan);
 
 
+        System.out.println(cardigan);
         Writer writer = songService.getWriter(willow.getTitle());
         System.out.println(writer);
-//        List<Song> songs = writerService.getSongs(taylor.getId());
+//        List<Song> songs = writerService.getSongs(taylor.getName());
 //        songs.forEach(System.out::println);
 
     }
