@@ -15,16 +15,9 @@ public class App
     {
 
 
-        Writer taylor = new Writer("Taylor swift", 32, "American");
-        Song willow = new Song("willow", "Taylor swift", "evermore", "2021", taylor);
-        Song cardigan = new Song("cardigan", "Taylor swift", "folklore", "2020", taylor);
-        try (Session session = factory.openSession()) {
+//        Writer taylor = new Writer("Taylor swift", 32, "American");
+//        Song willow = new Song("willow", "Taylor swift", "evermore", "2021", taylor);
+//        Song cardigan = new Song("cardigan", "Taylor swift", "folklore", "2020", taylor);
 
-            Transaction tx = session.beginTransaction();
-            session.persist(taylor);
-            session.persist(willow);
-            session.persist(cardigan);
-            tx.commit();
-        }
     }
 }
