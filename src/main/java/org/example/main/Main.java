@@ -1,22 +1,11 @@
 package org.example.main;
 
-import org.example.model.Song;
-import org.example.model.Writer;
-import org.example.repository.SongRepo;
-import org.example.repository.WriterRepo;
-import org.example.service.SongService;
-import org.example.service.WriterService;
 import org.example.view.Console;
 
-import java.util.List;
-
-public class App
+public class Main
 {
     public static void main( String[] args )
     {
-        Console console = new Console();
-        console.start();
-
 //        WriterService writerService = new WriterService(new WriterRepo());
 //        SongService songService = new SongService(new SongRepo());
 //
@@ -28,7 +17,10 @@ public class App
 //        writerService.add(taylor);
 //        songService.add(willow);
 //        songService.add(cardigan);
-//
+
+        Console console = new Console();
+        console.start();
+
 //
 //        System.out.println(cardigan);
 //        Writer writer = songService.getWriter(willow.getTitle());
