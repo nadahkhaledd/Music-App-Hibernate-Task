@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-import static org.example.repository.RepoConfig.factory;
+import static org.example.repository.config.factory;
 
 public class SongRepo {
 
