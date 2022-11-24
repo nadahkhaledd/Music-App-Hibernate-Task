@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import org.example.model.Song;
-import org.example.model.Writer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -51,7 +50,7 @@ public class SongRepo {
                     "update Song s set s.title=:title, s.artist=:artist, s.album=:album," +
                             " s.genre=:genre, s.yearRelease=:yearRelease" +
                             " where w.id=:id",
-                    Writer.class
+                    Song.class
             );
             query.setParameter("title", title)
                     .setParameter("artist", artist)

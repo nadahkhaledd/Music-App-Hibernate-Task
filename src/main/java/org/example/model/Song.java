@@ -98,4 +98,17 @@ public class Song {
     public void setWriter(Writer writer) {
         this.writer = writer;
     }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                ", yearRelease='" + yearRelease + '\'' +
+                ", writer=" + writer +
+                '}';
+    }
 }

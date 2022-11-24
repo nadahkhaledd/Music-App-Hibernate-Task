@@ -1,10 +1,7 @@
 package org.example.service;
 
 import org.example.model.Song;
-import org.example.model.Writer;
 import org.example.repository.SongRepo;
-import org.example.repository.WriterRepo;
-
 import java.util.List;
 
 public class SongService {

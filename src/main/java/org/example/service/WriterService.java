@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.Song;
 import org.example.model.Writer;
 import org.example.repository.WriterRepo;
 
@@ -32,6 +33,9 @@ public class WriterService {
         return repo.getWriter(id);
     }
 
+    public List<Song> getSongs(int id){
+        return repo.getWriterSongs(id);
+    }
 
 
 

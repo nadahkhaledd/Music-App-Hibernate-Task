@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.model.Song;
 import org.example.model.Writer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -73,6 +74,16 @@ public class WriterRepo {
             tx.commit();
         }
         return results;
+    }
+
+    public List<Song> getWriterSongs(int id){
+        List<Song> songs;
+        try (Session session = factory.openSession()) {
+            songs  = session.createQuery("from Song s where s.writer.id=:id ", Song.class)
+                    .setParameter("id", id)
+                    .list();
+        }
+        return songs;
     }
 
 }
