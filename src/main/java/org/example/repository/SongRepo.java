@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.model.Song;
+import org.example.model.Writer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -31,11 +32,11 @@ public class SongRepo {
         return songs;
     }
 
-    public Song getSong(int id) {
+    public Song getSong(String title) {
         Song song;
         try (Session session = factory.openSession()) {
-            song = session.createQuery("from Song s where s.id=:id ", Song.class)
-                    .setParameter("id", id)
+            song = session.createQuery("from Song s where s.title=:title ", Song.class)
+                    .setParameter("title", title)
                     .getSingleResult();
         }
         return song;
@@ -64,19 +65,29 @@ public class SongRepo {
         return results;
     }
 
-    public int deleteSong(int id){
+    public int deleteSong(String title){
         int results;
         try (Session session = factory.openSession()) {
             Transaction tx = session.beginTransaction();
             Query query=session.createQuery(
-                    "delete from Song s where s.id=:id",
+                    "delete from Song s where s.title=:title",
                     Song.class
             );
-            query.setParameter("id", id);
+            query.setParameter("title", title);
             results = query.executeUpdate();
             tx.commit();
         }
         return results;
+    }
+
+    public Writer getSongWriter(String title){
+        Writer writer;
+        try (Session session = factory.openSession()) {
+            writer  = session.createQuery("from Song s where s.title=:title ", Song.class)
+                    .setParameter("title", title)
+                    .getSingleResult().getWriter();
+        }
+        return writer;
     }
 
 

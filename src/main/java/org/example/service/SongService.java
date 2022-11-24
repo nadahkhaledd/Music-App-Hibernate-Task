@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Song;
+import org.example.model.Writer;
 import org.example.repository.SongRepo;
 import java.util.List;
 
@@ -21,14 +22,18 @@ public class SongService {
         repo.saveSong(song);
     }
 
-    public void delete(int id){
-        int result = repo.deleteSong(id);
+    public void delete(String title){
+        int result = repo.deleteSong(title);
         if(result == 1)
             System.out.println("Song deleted.");
     }
 
-    public Song get(int id){
-        return repo.getSong(id);
+    public Song get(String title){
+        return repo.getSong(title);
+    }
+
+    public Writer getWriter(String title){
+        return repo.getSongWriter(title);
     }
 
 }

@@ -33,8 +33,10 @@ public class App
         songService.add(cardigan);
 
 
-        List<Song> songs = writerService.getSongs(taylor.getId());
-        songs.forEach(System.out::println);
+        Writer writer = songService.getWriter(willow.getTitle());
+        System.out.println(writer);
+//        List<Song> songs = writerService.getSongs(taylor.getId());
+//        songs.forEach(System.out::println);
 
     }
 }
